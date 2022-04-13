@@ -23,7 +23,7 @@ const Component: FC<Props> = ({
       <img src={image} alt="character" />
       <div className="Card__content">
         <h5 className="Card__name">{name}</h5>
-        <p className="Card__status-species">
+        <p className={`Card__status-species Card__status-species--${status}`}>
           {status} - {species}
         </p>
         <p className="Card__label">Last known location:</p>
