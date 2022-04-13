@@ -23,7 +23,7 @@ function App() {
             species={item.species}
             image={item.image}
             location={item.location.name}
-            firstSeenIn={"dummy first seen"}
+            firstSeenInUrl={item.episode?.[0] || ""}
           />
         ))}
       </div>

@@ -1,4 +1,5 @@
-import { FC } from "react";
+import axios from "axios";
+import { FC, useEffect, useState } from "react";
 import "./index.scss";
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
   species: string;
   image: string;
   location: string;
-  firstSeenIn: string;
+  firstSeenInUrl: string;
 }
 
 const Component: FC<Props> = ({
@@ -16,8 +17,23 @@ const Component: FC<Props> = ({
   species,
   image,
   location,
-  firstSeenIn,
+  firstSeenInUrl,
 }) => {
+  const [firstSeenIn, setFirstSeenIn] = useState();
+  useEffect(() => {
+    if (firstSeenInUrl) {
+      axios
+        .get(firstSeenInUrl)
+        .then(function (response) {
+          setFirstSeenIn(response.data?.name);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    }
+  }, [firstSeenInUrl]);
+
   return (
     <div className="Card">
       <img src={image} alt="character" />
@@ -29,7 +45,7 @@ const Component: FC<Props> = ({
         <p className="Card__label">Last known location:</p>
         <p className="Card__value">{location}</p>
         <p className="Card__label">First seen in:</p>
-        <p className="Card__value">{firstSeenIn}</p>
+        <p className="Card__value">{firstSeenIn || ""}</p>
       </div>
     </div>
   );
